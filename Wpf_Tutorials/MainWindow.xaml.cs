@@ -19,42 +19,79 @@ using System.ComponentModel;
 namespace Wpf_Tutorials
 {
     /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
+    /// ViewModel, welches das Databinding managed
     /// </summary>
     public class ViewModel : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Inhalt für das Textfeld, welches per Databinding gefüttert wird
+        /// </summary>
         public string txtContent
         { get; set; }
-        
+
+        /// <summary>
+        /// Privates Feld, welches die Daten für das Databinding enthält
+        /// </summary>
+        private string _BtnCaption;
+
+        /// <summary>
+        /// Public Feld, mit welchem das private Feld per Accessors gefüttert wird und bei Set auch automatisch einen Refresh auslöst
+        /// </summary>
+        public string BtnCaption
+        {
+            get { return _BtnCaption; }
+            set 
+            {
+                _BtnCaption = value; 
+                OnPropertyRaised("BtnCaption"); 
+            } 
+        } 
+
+        /// <summary>
+        /// Boolsches Flag welches die Start()-Methode anhält
+        /// </summary>
+        public bool stopCondition
+        { get; set; }
+
+        /// <summary>
+        /// Konstruktor für die ViewModel-Klasse
+        /// </summary>
         public ViewModel()
         {
             txtContent = "Hello World!";
+            _BtnCaption = "Start";
         }
 
+        /// <summary>
+        /// Worker-Task, der asynchron ausgeführt wird und z.B. eine Zahl hochzählt
+        /// </summary>
         public async void Start()
         {
             await Task.Run(() =>
             {
+                int i = 0;
 
-                Thread.Sleep(2000);
-                txtContent = "1...";
-                OnPropertyRaised("txtContent");
-                Thread.Sleep(500);
-                txtContent = "2...";
-                OnPropertyRaised("txtContent");
-                Thread.Sleep(500);
-                txtContent = "3...";
-                OnPropertyRaised("txtContent");
-                Thread.Sleep(500);
-                txtContent = "Hellas!!";
+                while (stopCondition == false)
+                {
+                    Thread.Sleep(10);
+                    txtContent = i.ToString() + "...";
+                    OnPropertyRaised("txtContent");
+                    i++;
+                }
+                txtContent = "Stopped!";
                 OnPropertyRaised("txtContent");
             });
         }
 
-        // Based on this tutorial:
-        // https://www.c-sharpcorner.com/article/explain-inotifypropertychanged-in-wpf-mvvm/
-
+        /// <summary>
+        /// PropertyChanged Event, wird für MVVM Erweiterung benötigt
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Diese Methode sorgt für einen Refresh des per Databinding verbundenen Controls
+        /// </summary>
+        /// <param name="propertyname"></param>
         private void OnPropertyRaised(string propertyname)
         {
             if (PropertyChanged != null)
@@ -66,13 +103,34 @@ namespace Wpf_Tutorials
     
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Objekt-Instanz der ViewModel-Klasse
+        /// </summary>
         ViewModel viewModel = new ViewModel();
 
+        /// <summary>
+        /// Aktionen die durch einen Klick des Buttons ausgelöst werden
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void OnClick(object sender, RoutedEventArgs e)
         {
-            viewModel.Start();
+            if (viewModel.stopCondition == true)
+            {
+                viewModel.stopCondition = false;
+                viewModel.Start();
+                viewModel.BtnCaption = "Stop";
+            }
+            else
+            {
+                viewModel.stopCondition = true;
+                viewModel.BtnCaption = "Start";
+            }
         }
 
+        /// <summary>
+        /// Hauptprozess des MainWindows
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
