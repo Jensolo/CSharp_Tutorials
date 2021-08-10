@@ -45,7 +45,13 @@ namespace Wpf_Tutorials
                 _BtnCaption = value; 
                 OnPropertyRaised("BtnCaption"); 
             } 
-        } 
+        }
+
+        /// <summary>
+        /// Datencontainer für ListBox
+        /// </summary>
+        public List<string> ListBoxContent
+        { get; set; }
 
         /// <summary>
         /// Boolsches Flag welches die Start()-Methode anhält
@@ -60,6 +66,9 @@ namespace Wpf_Tutorials
         {
             txtContent = "Hello World!";
             _BtnCaption = "Start";
+            ListBoxContent = new List<string>();
+            ListBoxContent.Add("Item 1");
+            ListBoxContent.Add("Item 2");
         }
 
         /// <summary>
@@ -81,6 +90,12 @@ namespace Wpf_Tutorials
                 txtContent = "Stopped!";
                 OnPropertyRaised("txtContent");
             });
+        }
+
+        public void AddListItem(string content)
+        {
+            ListBoxContent.Add(content);
+            OnPropertyRaised("ListBoxContent");
         }
 
         /// <summary>
@@ -126,6 +141,8 @@ namespace Wpf_Tutorials
                 viewModel.stopCondition = true;
                 viewModel.BtnCaption = "Start";
             }
+
+            viewModel.AddListItem("NewItem");
         }
 
         /// <summary>
@@ -135,6 +152,7 @@ namespace Wpf_Tutorials
         {
             InitializeComponent();
             DataContext = viewModel;
+            //ListBox.ItemsSource = viewModel.ListBoxContent;
             viewModel.Start();
         }
     }

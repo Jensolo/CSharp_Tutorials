@@ -9,6 +9,7 @@
     <Grid>
         <Button Content="{Binding BtnCaption}" HorizontalAlignment="Left" Height="110" Margin="195,138,0,0" VerticalAlignment="Top" Width="308" Click="OnClick" ClickMode="Press"/>
         <TextBox HorizontalAlignment="Left" Height="56" Margin="195,36,0,0" TextWrapping="Wrap" Text="{Binding txtContent}" VerticalAlignment="Top" Width="308"/>
-
+        <ListBox x:Name="ListBox" HorizontalAlignment="Left" Height="399" Margin="10,10,0,0" VerticalAlignment="Top" Width="115" ItemsSource="{Binding ListBoxContent}">
+        </ListBox>
     </Grid>
 </Window>
