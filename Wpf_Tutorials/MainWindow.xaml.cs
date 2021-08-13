@@ -146,6 +146,16 @@ namespace Wpf_Tutorials
         }
 
         /// <summary>
+        /// Aktion die durch Wechseln der ListBox Auswahl ausgelöst wird
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void ListBox_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Selection was changed to " + ListBox1.SelectedIndex);
+        }
+
+        /// <summary>
         /// Hauptprozess des MainWindows
         /// </summary>
         public MainWindow()
@@ -154,6 +164,30 @@ namespace Wpf_Tutorials
             DataContext = viewModel;
             //ListBox.ItemsSource = viewModel.ListBoxContent;
             viewModel.Start();
+        }
+
+        /// <summary>
+        /// Fügt in TextBox enthaltenen Inhalt als neues ListBox Element hinzu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BTN_AddElement(object sender, RoutedEventArgs e)
+        {
+            ListBox1.Items.Add(TextBox1.Text);
+        }
+
+        /// <summary>
+        /// Entfernt das ausgewählte ListboxElement
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BTN_DeleteElement(object sender, RoutedEventArgs e)
+        {
+            // https://www.youtube.com/watch?v=5t9rThr9BI8
+            if (ListBox1.SelectedItem != null)
+            {
+                ListBox1.Items.Remove(ListBox1.SelectedItem);
+            }
         }
     }
 }
