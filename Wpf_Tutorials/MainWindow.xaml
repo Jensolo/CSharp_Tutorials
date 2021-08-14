@@ -23,6 +23,7 @@
                     <ListBoxItem Content="Item 3"/>
                     <ListBoxItem Content="Item 4"/>
                 </ListBox>
+                <TextBox x:Name="TB_LBIndex"/>
                 <Button Content="Add element" Click="BTN_AddElement"/>
                 <Button Content="Delete element" Click="BTN_DeleteElement"/>
                 <TextBox x:Name="TextBox1" Height="50"/>

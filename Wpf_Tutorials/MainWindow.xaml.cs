@@ -152,7 +152,7 @@ namespace Wpf_Tutorials
         /// <param name="e"></param>
         public void ListBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Selection was changed to " + ListBox1.SelectedIndex);
+            TB_LBIndex.Text = "Selected Index: " + ListBox1.SelectedIndex;
         }
 
         /// <summary>

@@ -1,0 +1,28 @@
+﻿<Window x:Class="WPF_ListBox_Tutorials.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_ListBox_Tutorials"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <DockPanel>
+        <ListBox x:Name="Navigation" ItemsSource="{Binding ContentList}" SelectionChanged="LoadContent" DockPanel.Dock="Left" Width="150" Background="#555" Foreground="#FFF" FontSize="18" Padding="0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" >
+                        <Grid>
+                            <Ellipse Stroke="White" Fill="DarkSeaGreen" Width="30" Height="30"/>
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding Abbr}" TextAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="{Binding Name}" FontSize="12"/>
+                            <TextBlock Text="{Binding Content}" FontSize="10" Padding="5"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TextBox x:Name="Content" Padding="20" FontSize="18"/>
+    </DockPanel>
+</Window>
