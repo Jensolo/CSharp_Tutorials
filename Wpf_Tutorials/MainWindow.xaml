@@ -10,27 +10,71 @@
         <Style TargetType="ListBoxItem">
             <Setter Property="FontSize" Value="18"></Setter>
         </Style>
-        <Style TargetType="Button">
-            <Setter Property="FontSize" Value="18"></Setter>
+        <!--<Style TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Setter Property="Background" Value="DarkGreen"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Red"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>-->
+        <Style x:Key="BG_Light" TargetType="TextBox">
+            <Setter Property="Background" Value="#888"/>
+        </Style>
+        <Style x:Key="MyButtonStyle" TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" 
+                        BorderThickness="0"
+                        Padding="0,0" 
+                        BorderBrush="LightGray" 
+                        CornerRadius="0" 
+                        Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#fc3"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="Black" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="False">
+                                <Setter Property="Background" Value="#aaa"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="Black" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
-    <Grid>
+    <Grid Background="#444">
         <StackPanel VerticalAlignment="Stretch" Orientation="Horizontal">
             <StackPanel>
-                <ListBox x:Name="ListBox1" SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged" Width="150">
+                <ListBox x:Name="ListBox1" SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged" Width="150" Background="#888">
                     <ListBoxItem>Item 1</ListBoxItem>
                     <ListBoxItem Content="Item 2"/>
                     <ListBoxItem Content="Item 3"/>
                     <ListBoxItem Content="Item 4"/>
                 </ListBox>
-                <TextBox x:Name="TB_LBIndex"/>
-                <Button Content="Add element" Click="BTN_AddElement"/>
-                <Button Content="Delete element" Click="BTN_DeleteElement"/>
-                <TextBox x:Name="TextBox1" Height="50"/>
+                <TextBox x:Name="TB_LBIndex" Style="{StaticResource BG_Light}"/>
+                <Button Content="Add element" Click="BTN_AddElement" Style="{StaticResource MyButtonStyle}"/>
+                <Button Content="Delete element" Click="BTN_DeleteElement" Style="{StaticResource MyButtonStyle}"/>
+                <TextBox x:Name="TextBox1" Style="{StaticResource BG_Light}" Height="50"/>
             </StackPanel>
             <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical" Width="642">
-                <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding txtContent}" VerticalAlignment="Top" Width="642" Height="100"/>
-                <Button Content="{Binding BtnCaption}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="100" Click="OnClick" ClickMode="Press"/>
+                <TextBox Style="{StaticResource BG_Light}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding txtContent}" VerticalAlignment="Top" Width="642" Height="100"/>
+                <Button Content="{Binding BtnCaption}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="642" Height="100" Click="OnClick" ClickMode="Press" Style="{StaticResource MyButtonStyle}"/>
             </StackPanel>
         </StackPanel>
     </Grid>
