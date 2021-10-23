@@ -122,6 +122,7 @@ namespace Wpf_Tutorials
         /// Objekt-Instanz der ViewModel-Klasse
         /// </summary>
         ViewModel viewModel = new ViewModel();
+        Window1 win1 = new Window1();
 
         /// <summary>
         /// Aktionen die durch einen Klick des Buttons ausgelöst werden
@@ -135,11 +136,16 @@ namespace Wpf_Tutorials
                 viewModel.stopCondition = false;
                 viewModel.Start();
                 viewModel.BtnCaption = "Stop";
+
+                
+                win1.Show();
             }
             else
             {
                 viewModel.stopCondition = true;
                 viewModel.BtnCaption = "Start";
+
+                //win1.Hide();
             }
 
             viewModel.AddListItem("NewItem");
